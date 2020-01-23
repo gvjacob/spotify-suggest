@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const { find, get } = require('lodash');
+const { getTrackData } = require('./utils');
 const express = require('express');
 const Spotify = require('spotify-web-api-node');
 
@@ -26,16 +27,29 @@ app.get(
   '/current-playback',
   (req, res) => {
     spotify.getMyCurrentPlayingTrack().then(({ body }) => {
-      const { item } = body;
-      const name = get(item, 'name');
-      const artist = get(item, ['artists', '0', 'name']);
-      const isPlaying = get(body, 'is_playing');
-      const images = get(item, ['album', 'images']);
+      const trackData = getTrackData(body.item);
 
-      res.send({ name, artist, images, isPlaying });
+      res.send(trackData);
     });
   },
-  () => res.send(null),
+  (req, res) => res.send(null),
+);
+
+const createSearchQuery = (query) => {
+  return Object.entries(query).reduce((acc, [key, value]) => {
+    return acc + ` ${key}:${value}`;
+  }, '');
+};
+
+app.get(
+  '/search',
+  (req, res) => {
+    const searchQuery = createSearchQuery(req.query);
+    spotify
+      .searchTracks(searchQuery)
+      .then((data) => res.send(data.body.tracks.items));
+  },
+  (req, res) => res.send([]),
 );
 
 app.listen(port, () =>
