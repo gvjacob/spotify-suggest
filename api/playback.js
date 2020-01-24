@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash';
 
 import spotify from './_spotify';
-import { getTrackData, createSearchQuery } from './_utils';
+import { getTrackData } from './_utils';
 
 const getRecentlyPlayed = async () => {
   return {
