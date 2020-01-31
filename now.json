@@ -5,6 +5,6 @@
     "SPOTIFY_CLIENT_ID": "@spotify-client-id",
     "SPOTIFY_CLIENT_SECRET": "@spotify-client-secret",
     "SPOTIFY_ACCESS_TOKEN": "@spotify-access-token",
-    "SPOTIFY_REFRESH_TOKEN": "@spotify-client-secret"
+    "SPOTIFY_REFRESH_TOKEN": "@spotify-refresh-token"
   }
 }
