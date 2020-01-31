@@ -7,17 +7,10 @@ deploy:
   stage: deploy
   script:
     - npm install -g now
-<<<<<<< HEAD
     - now secrets add spotify-client-id ${SPOTIFY_CLIENT_ID}
     - now secrets add spotify-client-secret ${SPOTIFY_CLIENT_SECRET}
     - now secrets add spotify-access-token ${SPOTIFY_ACCESS_TOKEN}
     - now secrets add spotify-refresh-token ${SPOTIFY_REFRESH_TOKEN}
-=======
-    - now secrets add spotify-client-id f5456f34c4424ea597b08c7beb284338
-    - now secrets add spotify-client-secret 4c9ca81b24864412a53fe3912f549fdf
-    - now secrets add spotify-access-token QC-wKJD23RjX3p269GCUTS-HClvSQ3X6xFYkRmT5ffecXbIVZh_W_7GqHjlfD4hapaSvqvKTmsz_TifAJ8Z_ol8DU9gsHhQxR0BVcnnrXMYn275meXvRBCgRYVpf3qLIDkh8tRlcmXTy1Tjy_AiSfj2SszrCKQRaGlYMEQNlcqCLQGqC8LC
-    - now secrets add spotify-refresh-token AQBMibfLspiJiUMH8nlqdqJyEiQkqAGonSXuvR0P0LnwZvk1a2nMAiEmNamtw4O0F3Xo3ZXeLweHi5jCGkDkZYB7QUs2Ifd-r5s6yQVs4gpzUNbymwLSOcZA0IxtX2tfZ-M
->>>>>>> d384bf8... now secrets
     - now --token ${NOW_TOKEN} --prod
 
 
