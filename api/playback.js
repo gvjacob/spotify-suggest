@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 
-import spotify from './_spotify';
+import spotify, { withRefresh } from './_spotify';
 import { getTrackData } from './_utils';
 
 const getRecentlyPlayed = async () => {
@@ -11,16 +11,19 @@ const getRecentlyPlayed = async () => {
   };
 };
 
-const getPlayback = async (req, res) => {
-  const { body } = await spotify.getMyCurrentPlayingTrack();
+const getPlayback = withRefresh(async (req, res) => {
+  try {
+    const { body } = await spotify.getMyCurrentPlayingTrack();
 
-  if (isEmpty(body)) {
-    const recentlyPlayed = await getRecentlyPlayed();
-    return res.send(recentlyPlayed);
+    if (isEmpty(body)) {
+      res.send(getRecentlyPlayed());
+    } else {
+      const trackData = getTrackData(body.item);
+      res.send(trackData);
+    }
+  } catch {
+    res.send(getRecentlyPlayed());
   }
-
-  const trackData = getTrackData(body.item);
-  res.send(trackData);
-};
+});
 
 export default getPlayback;

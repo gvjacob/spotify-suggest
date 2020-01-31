@@ -15,6 +15,19 @@ const spotify = new Spotify({
   clientSecret: SPOTIFY_CLIENT_SECRET,
 });
 
+export function withRefresh(wrapped) {
+  return async function() {
+    try {
+      const { body } = await spotify.refreshAccessToken();
+      spotify.setAccessToken(body['access_token']);
+    } catch (err) {
+      console.log('NOT REFRESHED');
+    }
+
+    const result = wrapped.apply(this, arguments);
+  };
+}
+
 spotify.setAccessToken(SPOTIFY_ACCESS_TOKEN);
 spotify.setRefreshToken(SPOTIFY_REFRESH_TOKEN);
 
