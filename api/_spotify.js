@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 import { find, get } from 'lodash';
 import Spotify from 'spotify-web-api-node';
 
