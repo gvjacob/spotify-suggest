@@ -11,14 +11,14 @@ const getCorrectImage = (images) => {
   return get(image, 'url');
 };
 
-export const getTrackData = (spotifyTrack) => {
+export const getTrackData = (spotifyTrack, isPlaying) => {
   const id = get(spotifyTrack, 'id');
   const name = get(spotifyTrack, 'name');
   const artist = get(spotifyTrack, ['artists', 0, 'name']);
   const images = get(spotifyTrack, ['album', 'images']);
   const image = getCorrectImage(images);
 
-  return { id, name, artist, image };
+  return { id, name, artist, image, isPlaying };
 };
 
 export const createSearchQuery = (query) => {
