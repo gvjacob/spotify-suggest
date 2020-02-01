@@ -21,6 +21,7 @@ const getAuthorizeUrl = () => {
     'playlist-modify-public',
     'playlist-modify-public',
     'user-read-currently-playing',
+    'user-read-recently-played',
   ];
   const redirectUri = 'http://www.localhost:3000/api/authenticate';
 

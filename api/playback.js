@@ -1,14 +1,16 @@
-import { isEmpty } from 'lodash';
+import { isEmpty, get } from 'lodash';
 
 import spotify, { withRefresh } from './_spotify';
 import { getTrackData } from './_utils';
 
 const getRecentlyPlayed = async () => {
-  return {
-    name: 'Game Winner',
-    artist: 'Vulfpeck',
-    image: 'https://i.scdn.co/image/ab67616d00001e029ac61b549ad39e5af30e340e',
-  };
+  const { body } = await spotify.getMyRecentlyPlayedTracks({
+    type: 'track',
+    limit: 1,
+  });
+
+  const recentlyPlayed = get(body, ['items', 0, 'track']);
+  return getTrackData(recentlyPlayed);
 };
 
 const getPlayback = withRefresh(async (req, res) => {
@@ -16,13 +18,13 @@ const getPlayback = withRefresh(async (req, res) => {
     const { body } = await spotify.getMyCurrentPlayingTrack();
 
     if (isEmpty(body)) {
-      res.send(getRecentlyPlayed());
+      res.send(await getRecentlyPlayed());
     } else {
       const trackData = getTrackData(body.item);
       res.send(trackData);
     }
   } catch {
-    res.send(getRecentlyPlayed());
+    res.send(await getRecentlyPlayed());
   }
 });
 

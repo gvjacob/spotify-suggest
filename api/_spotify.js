@@ -11,6 +11,8 @@ const {
 const spotify = new Spotify({
   clientId: SPOTIFY_CLIENT_ID,
   clientSecret: SPOTIFY_CLIENT_SECRET,
+  accessToken: SPOTIFY_ACCESS_TOKEN,
+  refreshAccessToken: SPOTIFY_REFRESH_TOKEN,
 });
 
 export function withRefresh(wrapped) {
@@ -25,8 +27,5 @@ export function withRefresh(wrapped) {
     const result = wrapped.apply(this, arguments);
   };
 }
-
-spotify.setAccessToken(SPOTIFY_ACCESS_TOKEN);
-spotify.setRefreshToken(SPOTIFY_REFRESH_TOKEN);
 
 export default spotify;
